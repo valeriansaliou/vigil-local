@@ -1,0 +1,13 @@
+[Unit]
+Description=Vigil Local
+After=network.target
+
+[Service]
+Type=simple
+User=vigil-local
+Group=vigil-local
+ExecStart=/bin/vigil-local -c /etc/vigil-local.cfg
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

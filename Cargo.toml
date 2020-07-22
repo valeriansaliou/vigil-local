@@ -1,0 +1,47 @@
+[package]
+name = "vigil-local"
+version = "1.0.0"
+description = "Vigil local probe relay."
+readme = "README.md"
+license = "MPL-2.0"
+edition = "2018"
+homepage = "https://github.com/valeriansaliou/vigil-local"
+repository = "https://github.com/valeriansaliou/vigil-local.git"
+keywords = ["infrastructure", "status", "monitor"]
+categories = ["web-programming"]
+authors = ["Valerian Saliou <valerian@valeriansaliou.name>"]
+
+[badges]
+travis-ci = { repository = "valeriansaliou/vigil-local", branch = "master" }
+coveralls = { repository = "valeriansaliou/vigil-local", branch = "master", service = "github" }
+
+[[bin]]
+name = "vigil-local"
+path = "src/main.rs"
+doc = false
+
+[dependencies]
+log = "0.4"
+clap = { version = "2.33", default-features = false }
+lazy_static = "1.4"
+serde = { version = "1.0", default-features = false }
+serde_derive = "1.0"
+serde_json = "1.0"
+toml = "0.5"
+url = { version = "2.1", default-features = false }
+fastping-rs = "0.1"
+http_req = { version = "0.7", features = ["rust-tls"], default-features = false }
+base64 = "0.12"
+memmem = { version = "0.1", default-features = false }
+
+[profile.dev]
+opt-level = 0
+debug = true
+debug-assertions = true
+
+[profile.release]
+opt-level = "s"
+codegen-units = 1
+lto = true
+debug = false
+debug-assertions = false
