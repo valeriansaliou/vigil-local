@@ -3,11 +3,11 @@ Vigil Local
 
 [![Build Status](https://travis-ci.org/valeriansaliou/vigil-local.svg?branch=master)](https://travis-ci.org/valeriansaliou/vigil-local)
 
-**Vigil Local is used to monitor internal hosts and report their status to Vigil.**
+**Vigil Local is used to monitor hosts behind a firewall and report their status to Vigil.**
 
 Vigil Local is a daemon that you can use to report internal service health to your Vigil-powered status page. It is designed to be used behind a firewall, and to monitor hosts bound to a local loop or LAN network that is not available to your main Vigil status page. It can prove useful as well if you want to fully isolate your Vigil status page from your internal services.
 
-Install Vigil Local on a server of yours and configure it with your Vigil endpoint URL and token; it will then automatically start monitoring all configured nodes and report them to Vigil. Make sure that you pre-configure all local nodes as `local` in Vigil, and then as `poll` or `script` in Vigil Local, accordingly.
+Install Vigil Local on a server of yours and configure it with your Vigil endpoint URL and token; it will then start monitoring all configured nodes and report them to Vigil. Make sure that you pre-configure all local nodes as `local` in Vigil, and then as `poll` or `script` in Vigil Local, accordingly.
 
 _Tested at Rust version: `rustc 1.44.1 (c7087fe00 2020-06-17)`_
 
@@ -19,7 +19,7 @@ Vigil is an open-source Status Page you can host on your infrastructure, used to
 
 It lets you monitor your critical systems using a variety of methods: `push` for applications using a Vigil Reporter library, `poll` for Vigil-reachable HTTP, TCP & ICMP services, `script` to execute custom probes, and `local` for non-Vigil-reachable private services.
 
-Vigil Local lets you monitor nodes that are configured in `local` mode, aside other monitoring methods that do not require the Vigil Local utility.
+Vigil Local lets you monitor nodes that are configured in `local` mode (in Vigil), aside other monitoring methods that do not require the Vigil Local utility.
 
 ## How to use it?
 
