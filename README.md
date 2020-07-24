@@ -15,11 +15,11 @@ _Tested at Rust version: `rustc 1.44.1 (c7087fe00 2020-06-17)`_
 
 ## What is Vigil?
 
-Vigil is an open-source Status Page you can host on your infrastructure, used to monitor all your servers and apps, and visible to your users.
+[Vigil is an open-source Status Page](https://github.com/valeriansaliou/vigil) you can host on your infrastructure, used to monitor all your servers and apps, and visible to your users.
 
 It lets you monitor your critical systems using a variety of methods: `push` for applications using a Vigil Reporter library, `poll` for Vigil-reachable HTTP, TCP & ICMP services, `script` to execute custom probes, and `local` for non-Vigil-reachable private services.
 
-Vigil Local lets you monitor nodes that are configured in `local` mode (in Vigil), aside other monitoring methods that do not require the Vigil Local utility.
+Vigil Local lets you monitor nodes that are configured in `local` mode (in Vigil), aside other monitoring methods that do not require the Vigil Local utility (and thus can run on Vigil itself right away).
 
 ## How to use it?
 
