@@ -5,9 +5,9 @@ Vigil Local
 
 **Vigil Local is used to monitor hosts behind a firewall and report their status to Vigil.**
 
-Vigil Local is an (optional) daemon that you can use to report internal service health to your [Vigil-powered status page](https://github.com/valeriansaliou/vigil). It is designed to be used behind a firewall, and _**to monitor hosts bound to a local loop or LAN network, that are not available to your main Vigil status page**_. It can prove useful as well if you want to fully isolate your Vigil status page from your internal services.
+Vigil Local is an (optional) slave daemon that you can use to report internal service health to your [Vigil-powered status page](https://github.com/valeriansaliou/vigil) master server. It is designed to be used behind a firewall, and _**to monitor hosts bound to a local loop or LAN network, that are not available to your main Vigil status page**_. It can prove useful as well if you want to fully isolate your Vigil status page from your internal services.
 
-Install Vigil Local on a server of yours and configure it with your Vigil endpoint URL and token; it will then start monitoring all configured nodes and report them to Vigil. Make sure that you pre-configure all local nodes as `local` in Vigil, and then as `poll` or `script` in Vigil Local, accordingly. The service identifier and node identifier must match either sides, as they will be used to identify the replica status being reported from the Vigil Local slave to the Vigil master.
+Install Vigil Local on a server of yours and configure it with your Vigil endpoint URL and token; it will then start monitoring all configured nodes and report them to Vigil. Make sure that you pre-configure all local nodes as `local` in Vigil, and then as `poll` or `script` in Vigil Local, accordingly. The service identifier and node identifier must match on either sides, as they will be used to identify the replica status being reported from the Vigil Local slave to the Vigil master.
 
 _Tested at Rust version: `rustc 1.44.1 (c7087fe00 2020-06-17)`_
 
