@@ -3,7 +3,7 @@ Vigil Local
 
 [![Build Status](https://travis-ci.org/valeriansaliou/vigil-local.svg?branch=master)](https://travis-ci.org/valeriansaliou/vigil-local)
 
-**Vigil Local is used as a slave service to monitor hosts behind a firewall and report their status to Vigil.**
+**Vigil Local daemon. Used as a slave service to monitor hosts behind a firewall and report their status to Vigil.**
 
 Vigil Local is an (optional) slave daemon that you can use to report internal service health to your [Vigil-powered status page](https://github.com/valeriansaliou/vigil) master server. It is designed to be used behind a firewall, and _**to monitor hosts bound to a local loop or LAN network, that are not available to your main Vigil status page**_. It can prove useful as well if you want to fully isolate your Vigil status page from your internal services.
 
