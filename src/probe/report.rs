@@ -24,7 +24,7 @@ use crate::APP_CONF;
 pub const REPORT_HTTP_CLIENT_TIMEOUT: Duration = Duration::from_secs(10);
 
 const RETRY_STATUS_TIMES: u8 = 2;
-const RETRY_STATUS_AFTER_SECONDS: u64 = 5;
+const RETRY_STATUS_AFTER_SECONDS: u64 = 3;
 
 #[derive(Debug, Clone, Copy)]
 pub enum ReportReplica<'a> {
@@ -94,7 +94,7 @@ fn status_attempt<'a>(
                 Err(())
             } else {
                 warn!(
-                    "status report attempt #{} failed on #{}:#{}:[{:?}], will retry after delay",
+                    "status report attempt #{} failed on #{}:#{}:[{:?}], will retry",
                     attempt, service.id, node.id, replica
                 );
 

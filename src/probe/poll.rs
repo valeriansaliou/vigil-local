@@ -97,7 +97,7 @@ fn proceed_replica_attempt(
     attempt: u8,
 ) -> Status {
     info!(
-        "running replica scan attempt #{} on #{}:#{}:[{:?}]",
+        "running poll replica scan attempt #{} on #{}:#{}:[{:?}]",
         attempt, service_id, node_id, replica
     );
 
@@ -111,7 +111,7 @@ fn proceed_replica_attempt(
                 Status::Dead
             } else {
                 warn!(
-                    "replica scan attempt #{} failed on #{}:#{}:[{:?}], will retry after delay",
+                    "poll replica scan attempt #{} failed on #{}:#{}:[{:?}], will retry",
                     attempt, service_id, node_id, replica
                 );
 
@@ -138,7 +138,7 @@ fn proceed_replica_request(
     http_body_healthy_match: &Option<Regex>,
 ) -> Status {
     debug!(
-        "scanning replica: #{}:#{}:[{:?}]",
+        "scanning poll replica: #{}:#{}:[{:?}]",
         service_id, node_id, replica
     );
 
