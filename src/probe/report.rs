@@ -126,7 +126,7 @@ fn status_request<'a>(
         health: status.as_str(),
     };
 
-    // Encore payload to string
+    // Encode payload to string
     // Notice: fail hard if payload is invalid (it should never be)
     let payload_json = serde_json::to_vec(&payload).expect("invalid status request payload");
 

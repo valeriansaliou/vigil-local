@@ -31,8 +31,8 @@ pub struct ConfigReport {
 
 #[derive(Deserialize)]
 pub struct ConfigMetrics {
-    #[serde(default = "defaults::metrics_poll_interval")]
-    pub poll_interval: u64,
+    #[serde(default = "defaults::metrics_interval")]
+    pub interval: u64,
 
     #[serde(default = "defaults::metrics_poll_retry")]
     pub poll_retry: u8,
@@ -48,9 +48,6 @@ pub struct ConfigMetrics {
 
     #[serde(default = "defaults::metrics_poll_delay_sick")]
     pub poll_delay_sick: u64,
-
-    #[serde(default = "defaults::metrics_script_interval")]
-    pub script_interval: u64,
 }
 
 #[derive(Deserialize)]

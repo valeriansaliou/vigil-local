@@ -13,7 +13,6 @@ use crate::probe::mode::Mode;
 use crate::APP_CONF;
 
 const PROBE_RUN_HOLD_SECONDS: u64 = 2;
-const PROBE_CHECK_INTERVAL_SECONDS: u64 = 120;
 
 pub fn run() {
     // Hold on a bit before first cycle
@@ -27,11 +26,11 @@ pub fn run() {
 
         info!(
             "done cycling probe, holding for next cycle: {}s",
-            PROBE_CHECK_INTERVAL_SECONDS
+            APP_CONF.metrics.interval
         );
 
-        // Hold on a bit for next cycle
-        thread::sleep(Duration::from_secs(PROBE_CHECK_INTERVAL_SECONDS));
+        // Hold for next aggregate run
+        thread::sleep(Duration::from_secs(APP_CONF.metrics.interval));
 
         debug!("holding for next probe cycle, will run next cycle");
     }
@@ -47,8 +46,8 @@ fn cycle() {
             debug!("scanning for targets in service node: #{}", node.id);
 
             match node.mode {
-                Mode::Poll => poll_dispatch(service, node, PROBE_CHECK_INTERVAL_SECONDS),
-                Mode::Script => script_dispatch(service, node, PROBE_CHECK_INTERVAL_SECONDS),
+                Mode::Poll => poll_dispatch(service, node, APP_CONF.metrics.interval),
+                Mode::Script => script_dispatch(service, node, APP_CONF.metrics.interval),
             }
         }
     }

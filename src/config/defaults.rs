@@ -8,8 +8,8 @@ pub fn server_log_level() -> String {
     "error".to_string()
 }
 
-pub fn metrics_poll_interval() -> u64 {
-    60
+pub fn metrics_interval() -> u64 {
+    120
 }
 
 pub fn metrics_poll_retry() -> u8 {
@@ -30,8 +30,4 @@ pub fn metrics_poll_delay_dead() -> u64 {
 
 pub fn metrics_poll_delay_sick() -> u64 {
     1
-}
-
-pub fn metrics_script_interval() -> u64 {
-    180
 }

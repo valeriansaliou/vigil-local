@@ -88,13 +88,12 @@ Use the sample [config.cfg](https://github.com/valeriansaliou/vigil-local/blob/m
 
 **[metrics]**
 
-* `poll_interval` (type: _integer_, allowed: seconds, default: `60`) — Interval for which to probe nodes in `poll` mode
+* `interval` (type: _integer_, allowed: seconds, default: `120`) — Interval for which to probe nodes in `poll` and `script` mode (ie. all nodes)
 * `poll_retry` (type: _integer_, allowed: seconds, default: `2`) — Interval after which to try probe for a second time nodes in `poll` mode (only when the first check fails)
 * `poll_http_status_healthy_above` (type: _integer_, allowed: HTTP status code, default: `200`) — HTTP status above which `poll` checks to HTTP replicas reports as `healthy`
 * `poll_http_status_healthy_below` (type: _integer_, allowed: HTTP status code, default: `400`) — HTTP status under which `poll` checks to HTTP replicas reports as `healthy`
 * `poll_delay_dead` (type: _integer_, allowed: seconds, default: `10`) — Delay after which a node in `poll` mode is to be considered `dead` (ie. check response delay)
 * `poll_delay_sick` (type: _integer_, allowed: seconds, default: `1`) — Delay after which a node in `poll` mode is to be considered `sick` (ie. check response delay)
-* `script_interval` (type: _integer_, allowed: seconds, default: `180`) — Interval for which to probe nodes in `script` mode
 
 **[probe]**
 
