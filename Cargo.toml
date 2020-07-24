@@ -1,7 +1,7 @@
 [package]
 name = "vigil-local"
 version = "1.0.0"
-description = "Vigil local probe relay."
+description = "Vigil Local daemon. Used as a slave service to monitor hosts behind a firewall and report their status to Vigil."
 readme = "README.md"
 license = "MPL-2.0"
 edition = "2018"
@@ -41,7 +41,7 @@ debug-assertions = true
 
 [profile.release]
 opt-level = "s"
-codegen-units = 1
 lto = true
 debug = false
 debug-assertions = false
+panic = "abort"
