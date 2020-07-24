@@ -21,6 +21,7 @@ use std::time::SystemTime;
 use super::replica::ReplicaURL;
 use super::report::status as report_status;
 use super::status::Status;
+use crate::config::config::{ConfigProbeService, ConfigProbeServiceNode};
 use crate::config::regex::Regex;
 use crate::utilities::chunk::Decoder as ChunkDecoder;
 use crate::APP_CONF;
@@ -33,38 +34,35 @@ lazy_static! {
         format!("{}/{}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
 }
 
-pub fn dispatch(interval: u64) {
-    debug!("will dispatch polls");
+pub fn dispatch(service: &ConfigProbeService, node: &ConfigProbeServiceNode, interval: u64) {
+    if let Some(ref replicas) = node.replicas {
+        if !replicas.is_empty() {
+            debug!("poll node has replicas in service node: #{}", node.id);
 
-    for service in &APP_CONF.probe.service {
-        debug!("scanning for polls in service: #{}", service.id);
+            for replica in replicas {
+                let replica_status = proceed_replica(
+                    &service.id,
+                    &node.id,
+                    replica,
+                    &node.http_body_healthy_match,
+                );
 
-        for node in &service.node {
-            debug!("scanning for polls in service node: #{}", node.id);
+                debug!("got replica status upon poll: {:?}", replica_status);
 
-            if let Some(ref replicas) = node.replicas {
-                for replica in replicas {
-                    let replica_status = proceed_replica(
-                        &service.id,
-                        &node.id,
-                        replica,
-                        &node.http_body_healthy_match,
-                    );
-
-                    debug!("got replica status upon poll: {:?}", replica_status);
-
-                    match report_status(&service, node, &replica, &replica_status, interval) {
-                        Ok(_) => info!("reported poll replica status: {:?}", replica_status),
-                        Err(_) => {
-                            warn!("failed reporting poll replica status: {:?}", replica_status)
-                        }
-                    }
+                match report_status(&service, node, &replica, &replica_status, interval) {
+                    Ok(_) => info!("reported poll replica status: {:?}", replica_status),
+                    Err(_) => warn!("failed reporting poll replica status: {:?}", replica_status),
                 }
             }
+
+            return;
         }
     }
 
-    info!("dispatched polls");
+    warn!(
+        "poll node has no usable replica in service node: #{}",
+        node.id
+    );
 }
 
 pub fn proceed_replica(
