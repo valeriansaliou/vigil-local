@@ -81,8 +81,8 @@ Use the sample [config.cfg](https://github.com/valeriansaliou/vigil-local/blob/m
 
 **[report]**
 
-* `endpoint` (type: _string_, allowed: URL, no default) — Vigil status page reporting URL (can be public via eg. HTTPS, or private over LAN; without trailing slash, eg. `https://status.example.com`)
-* `token` (type: _string_, allowed: any string, no default) — Your Vigil Reporter token (as configured in Vigil)
+* `endpoint` (type: _string_, allowed: URL, no default) — Vigil status page master reporting URL (can be public via eg. HTTPS, or private over LAN; without trailing slash, eg. `https://status.example.com`)
+* `token` (type: _string_, allowed: any string, no default) — Your master Vigil Reporter token (as configured in Vigil)
 
 **[metrics]**
 
