@@ -15,7 +15,6 @@ extern crate serde_derive;
 extern crate base64;
 extern crate http_req;
 extern crate ping;
-extern crate regex;
 extern crate run_script;
 extern crate serde;
 extern crate serde_json;
@@ -24,7 +23,6 @@ extern crate url;
 
 mod config;
 mod probe;
-mod utilities;
 
 use std::ops::Deref;
 use std::str::FromStr;

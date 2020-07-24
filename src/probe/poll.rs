@@ -11,7 +11,6 @@ use http_req::{
 use ping::ping;
 
 use std::cmp::min;
-use std::io::Read;
 use std::net::{SocketAddr, TcpStream, ToSocketAddrs};
 use std::str::FromStr;
 use std::thread;
@@ -22,8 +21,6 @@ use super::replica::ReplicaURL;
 use super::report::{status as report_status, ReportReplica};
 use super::status::Status;
 use crate::config::config::{ConfigProbeService, ConfigProbeServiceNode};
-use crate::config::regex::Regex;
-use crate::utilities::chunk::Decoder as ChunkDecoder;
 use crate::APP_CONF;
 
 const NODE_ICMP_TIMEOUT_MILLISECONDS: u64 = 1000;
@@ -40,12 +37,7 @@ pub fn dispatch(service: &ConfigProbeService, node: &ConfigProbeServiceNode, int
             debug!("poll node has replicas in service node: #{}", node.id);
 
             for replica in replicas {
-                let replica_status = proceed_replica(
-                    &service.id,
-                    &node.id,
-                    replica,
-                    &node.http_body_healthy_match,
-                );
+                let replica_status = proceed_replica(&service.id, &node.id, replica);
 
                 debug!("got replica status upon poll: {:?}", replica_status);
 
@@ -71,28 +63,15 @@ pub fn dispatch(service: &ConfigProbeService, node: &ConfigProbeServiceNode, int
     );
 }
 
-pub fn proceed_replica(
-    service_id: &str,
-    node_id: &str,
-    replica: &ReplicaURL,
-    http_body_healthy_match: &Option<Regex>,
-) -> Status {
+pub fn proceed_replica(service_id: &str, node_id: &str, replica: &ReplicaURL) -> Status {
     // Attempt to acquire (first attempt)
-    proceed_replica_attempt(
-        service_id,
-        node_id,
-        replica,
-        http_body_healthy_match,
-        APP_CONF.metrics.poll_retry,
-        0,
-    )
+    proceed_replica_attempt(service_id, node_id, replica, APP_CONF.metrics.poll_retry, 0)
 }
 
 fn proceed_replica_attempt(
     service_id: &str,
     node_id: &str,
     replica: &ReplicaURL,
-    http_body_healthy_match: &Option<Regex>,
     retry_times: u8,
     attempt: u8,
 ) -> Status {
@@ -101,7 +80,7 @@ fn proceed_replica_attempt(
         attempt, service_id, node_id, replica
     );
 
-    match proceed_replica_request(service_id, node_id, replica, http_body_healthy_match) {
+    match proceed_replica_request(service_id, node_id, replica) {
         Status::Healthy => Status::Healthy,
         Status::Sick => Status::Sick,
         Status::Dead => {
@@ -118,25 +97,13 @@ fn proceed_replica_attempt(
                 // Retry after delay
                 thread::sleep(Duration::from_millis(RETRY_REPLICA_AFTER_MILLISECONDS));
 
-                proceed_replica_attempt(
-                    service_id,
-                    node_id,
-                    replica,
-                    http_body_healthy_match,
-                    retry_times,
-                    next_attempt,
-                )
+                proceed_replica_attempt(service_id, node_id, replica, retry_times, next_attempt)
             }
         }
     }
 }
 
-fn proceed_replica_request(
-    service_id: &str,
-    node_id: &str,
-    replica: &ReplicaURL,
-    http_body_healthy_match: &Option<Regex>,
-) -> Status {
+fn proceed_replica_request(service_id: &str, node_id: &str, replica: &ReplicaURL) -> Status {
     debug!(
         "scanning poll replica: #{}:#{}:[{:?}]",
         service_id, node_id, replica
@@ -147,10 +114,8 @@ fn proceed_replica_request(
     let (is_up, poll_duration) = match replica {
         &ReplicaURL::ICMP(_, ref host) => proceed_replica_request_icmp(host),
         &ReplicaURL::TCP(_, ref host, port) => proceed_replica_request_tcp(host, port),
-        &ReplicaURL::HTTP(_, ref url) => proceed_replica_request_http(url, http_body_healthy_match),
-        &ReplicaURL::HTTPS(_, ref url) => {
-            proceed_replica_request_http(url, http_body_healthy_match)
-        }
+        &ReplicaURL::HTTP(_, ref url) => proceed_replica_request_http(url),
+        &ReplicaURL::HTTPS(_, ref url) => proceed_replica_request_http(url),
     };
 
     if is_up == true {
@@ -297,10 +262,7 @@ fn proceed_replica_request_tcp(host: &str, port: u16) -> (bool, Option<Duration>
     (false, None)
 }
 
-fn proceed_replica_request_http(
-    url: &str,
-    http_body_healthy_match: &Option<Regex>,
-) -> (bool, Option<Duration>) {
+fn proceed_replica_request_http(url: &str) -> (bool, Option<Duration>) {
     debug!("prober poll will fire for http target: {}", &url);
 
     // Unpack dead timeout
@@ -313,11 +275,7 @@ fn proceed_replica_request_http(
         .connect_timeout(Some(dead_timeout))
         .read_timeout(Some(dead_timeout))
         .write_timeout(Some(dead_timeout))
-        .method(if http_body_healthy_match.is_some() == true {
-            Method::GET
-        } else {
-            Method::HEAD
-        })
+        .method(Method::HEAD)
         .header("User-Agent", &*POLL_HTTP_HEADER_USERAGENT)
         .send(&mut response_body);
 
@@ -334,56 +292,6 @@ fn proceed_replica_request_http(
         if status_code >= APP_CONF.metrics.poll_http_status_healthy_above
             && status_code < APP_CONF.metrics.poll_http_status_healthy_below
         {
-            // Check response body for match? (if configured)
-            if let Some(ref http_body_healthy_match_inner) = http_body_healthy_match {
-                if !response_body.is_empty() {
-                    debug!(
-                        "checking prober poll result response text for url: {} for any match",
-                        &url
-                    );
-
-                    // Check transfer encoding of response body
-                    let transfer_encoding = response
-                        .headers()
-                        .get("Transfer-Encoding")
-                        .map(|value| value.to_owned())
-                        .unwrap_or("identity".to_string());
-
-                    // Decode body using an appropriate decoding method
-                    response_body = if transfer_encoding == "chunked" {
-                        // Decode chunked HTTP encoding
-                        let mut response_body_decoded = Vec::new();
-
-                        let mut chunked_decoder = ChunkDecoder::new(response_body.as_slice());
-
-                        chunked_decoder.read_to_end(&mut response_body_decoded).ok();
-
-                        response_body_decoded
-                    } else {
-                        // Return identity
-                        response_body
-                    };
-
-                    // Decode response body to text
-                    if let Ok(response_text) = std::str::from_utf8(&response_body) {
-                        // Doesnt match? Consider as DOWN.
-                        if http_body_healthy_match_inner.is_match(&response_text) == false {
-                            return (false, None);
-                        }
-                    } else {
-                        debug!("could not parse response body as text for url: {}", &url);
-
-                        // Could not parse? Consider as DOWN.
-                        return (false, None);
-                    }
-                } else {
-                    debug!("could not unpack response text for url: {}", &url);
-
-                    // Consider as DOWN (the response text could not be checked)
-                    return (false, None);
-                }
-            }
-
             return (true, None);
         }
     } else {

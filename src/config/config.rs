@@ -5,7 +5,6 @@
 // License: Mozilla Public License v2.0 (MPL v2.0)
 
 use super::defaults;
-use super::regex::Regex;
 use crate::probe::mode::Mode;
 use crate::probe::replica::ReplicaURL;
 
@@ -37,17 +36,17 @@ pub struct ConfigMetrics {
     #[serde(default = "defaults::metrics_poll_retry")]
     pub poll_retry: u8,
 
-    #[serde(default = "defaults::metrics_poll_http_status_healthy_above")]
-    pub poll_http_status_healthy_above: u16,
-
-    #[serde(default = "defaults::metrics_poll_http_status_healthy_below")]
-    pub poll_http_status_healthy_below: u16,
-
     #[serde(default = "defaults::metrics_poll_delay_dead")]
     pub poll_delay_dead: u64,
 
     #[serde(default = "defaults::metrics_poll_delay_sick")]
     pub poll_delay_sick: u64,
+
+    #[serde(default = "defaults::metrics_poll_http_status_healthy_above")]
+    pub poll_http_status_healthy_above: u16,
+
+    #[serde(default = "defaults::metrics_poll_http_status_healthy_below")]
+    pub poll_http_status_healthy_below: u16,
 }
 
 #[derive(Deserialize)]
@@ -67,5 +66,4 @@ pub struct ConfigProbeServiceNode {
     pub mode: Mode,
     pub replicas: Option<Vec<ReplicaURL>>,
     pub scripts: Option<Vec<String>>,
-    pub http_body_healthy_match: Option<Regex>,
 }

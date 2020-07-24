@@ -16,18 +16,18 @@ pub fn metrics_poll_retry() -> u8 {
     2
 }
 
-pub fn metrics_poll_http_status_healthy_above() -> u16 {
-    200
-}
-
-pub fn metrics_poll_http_status_healthy_below() -> u16 {
-    400
-}
-
 pub fn metrics_poll_delay_dead() -> u64 {
     10
 }
 
 pub fn metrics_poll_delay_sick() -> u64 {
     1
+}
+
+pub fn metrics_poll_http_status_healthy_above() -> u16 {
+    200
+}
+
+pub fn metrics_poll_http_status_healthy_below() -> u16 {
+    400
 }
