@@ -54,8 +54,10 @@ pub fn dispatch(interval: u64) {
                     debug!("got replica status upon poll: {:?}", replica_status);
 
                     match report_status(&service, node, &replica, &replica_status, interval) {
-                        Ok(_) => info!("reported replica status: {:?}", replica_status),
-                        Err(_) => warn!("failed reporting replica status: {:?}", replica_status),
+                        Ok(_) => info!("reported poll replica status: {:?}", replica_status),
+                        Err(_) => {
+                            warn!("failed reporting poll replica status: {:?}", replica_status)
+                        }
                     }
                 }
             }

@@ -11,3 +11,4 @@ pub mod mode;
 pub mod poll;
 pub mod replica;
 pub mod report;
+pub mod script;
