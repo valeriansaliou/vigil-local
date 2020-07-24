@@ -1,7 +1,7 @@
 Vigil Local
 ===========
 
-[![Build Status](https://travis-ci.org/valeriansaliou/vigil-local.svg?branch=master)](https://travis-ci.org/valeriansaliou/vigil-local)
+[![Build Status](https://travis-ci.org/valeriansaliou/vigil-local.svg?branch=master)](https://travis-ci.org/valeriansaliou/vigil-local) [![Buy Me A Coffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/valeriansaliou)
 
 **Vigil Local daemon. Used as a slave service to monitor hosts behind a firewall and report their status to Vigil.**
 
