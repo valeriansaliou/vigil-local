@@ -41,12 +41,6 @@ pub struct ConfigMetrics {
 
     #[serde(default = "defaults::metrics_poll_delay_sick")]
     pub poll_delay_sick: u64,
-
-    #[serde(default = "defaults::metrics_poll_http_status_healthy_above")]
-    pub poll_http_status_healthy_above: u16,
-
-    #[serde(default = "defaults::metrics_poll_http_status_healthy_below")]
-    pub poll_http_status_healthy_below: u16,
 }
 
 #[derive(Deserialize)]

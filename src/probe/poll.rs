@@ -26,6 +26,9 @@ use crate::APP_CONF;
 const NODE_ICMP_TIMEOUT_MILLISECONDS: u64 = 1000;
 const RETRY_REPLICA_AFTER_MILLISECONDS: u64 = 200;
 
+const HTTP_STATUS_HEALTHY_ABOVE: u16 = 200;
+const HTTP_STATUS_HEALTHY_BELOW: u16 = 400;
+
 lazy_static! {
     static ref POLL_HTTP_HEADER_USERAGENT: String =
         format!("{}/{}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION"));
@@ -289,9 +292,7 @@ fn proceed_replica_request_http(url: &str) -> (bool, Option<Duration>) {
         );
 
         // Consider as UP?
-        if status_code >= APP_CONF.metrics.poll_http_status_healthy_above
-            && status_code < APP_CONF.metrics.poll_http_status_healthy_below
-        {
+        if status_code >= HTTP_STATUS_HEALTHY_ABOVE && status_code < HTTP_STATUS_HEALTHY_BELOW {
             return (true, None);
         }
     } else {

@@ -92,8 +92,6 @@ Use the sample [config.cfg](https://github.com/valeriansaliou/vigil-local/blob/m
 * `poll_retry` (type: _integer_, allowed: seconds, default: `2`) — Interval after which to try probe for a second time nodes in `poll` mode (only when the first check fails)
 * `poll_delay_dead` (type: _integer_, allowed: seconds, default: `10`) — Delay after which a node in `poll` mode is to be considered `dead` (ie. check response delay)
 * `poll_delay_sick` (type: _integer_, allowed: seconds, default: `1`) — Delay after which a node in `poll` mode is to be considered `sick` (ie. check response delay)
-* `poll_http_status_healthy_above` (type: _integer_, allowed: HTTP status code, default: `200`) — HTTP status above which `poll` checks to HTTP replicas reports as `healthy`
-* `poll_http_status_healthy_below` (type: _integer_, allowed: HTTP status code, default: `400`) — HTTP status under which `poll` checks to HTTP replicas reports as `healthy`
 
 **[probe]**
 
