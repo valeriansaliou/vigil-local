@@ -77,7 +77,7 @@ Use the sample [config.cfg](https://github.com/valeriansaliou/vigil-local/blob/m
 
 **[server]**
 
-* `log_level` (type: _string_, allowed: `debug`, `info`, `warn`, `error`, default: `warn`) — Verbosity of logging, set it to `error` in production
+* `log_level` (type: _string_, allowed: `debug`, `info`, `warn`, `error`, default: `error`) — Verbosity of logging, set it to `error` in production
 
 **[report]**
 

@@ -5,7 +5,7 @@
 // License: Mozilla Public License v2.0 (MPL v2.0)
 
 pub fn server_log_level() -> String {
-    "warn".to_string()
+    "error".to_string()
 }
 
 pub fn metrics_poll_interval() -> u64 {

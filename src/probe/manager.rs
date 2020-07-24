@@ -4,13 +4,13 @@
 // Copyright: 2020, Valerian Saliou <valerian@valeriansaliou.name>
 // License: Mozilla Public License v2.0 (MPL v2.0)
 
-use crate::probe::mode::Mode;
-use crate::APP_CONF;
 use std::thread;
 use std::time::Duration;
 
 use super::poll::dispatch as poll_dispatch;
 use super::script::dispatch as script_dispatch;
+use crate::probe::mode::Mode;
+use crate::APP_CONF;
 
 const PROBE_RUN_HOLD_SECONDS: u64 = 2;
 const PROBE_CHECK_INTERVAL_SECONDS: u64 = 120;
