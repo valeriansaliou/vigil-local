@@ -19,7 +19,7 @@ use std::time::Duration;
 use std::time::SystemTime;
 
 use super::replica::ReplicaURL;
-use super::report::status as report_status;
+use super::report::{status as report_status, ReportReplica};
 use super::status::Status;
 use crate::config::config::{ConfigProbeService, ConfigProbeServiceNode};
 use crate::config::regex::Regex;
@@ -49,7 +49,13 @@ pub fn dispatch(service: &ConfigProbeService, node: &ConfigProbeServiceNode, int
 
                 debug!("got replica status upon poll: {:?}", replica_status);
 
-                match report_status(&service, node, &replica, &replica_status, interval) {
+                match report_status(
+                    &service,
+                    node,
+                    ReportReplica::Poll(replica),
+                    &replica_status,
+                    interval,
+                ) {
                     Ok(_) => info!("reported poll replica status: {:?}", replica_status),
                     Err(_) => warn!("failed reporting poll replica status: {:?}", replica_status),
                 }

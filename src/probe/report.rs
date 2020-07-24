@@ -26,6 +26,12 @@ pub const REPORT_HTTP_CLIENT_TIMEOUT: Duration = Duration::from_secs(10);
 const RETRY_STATUS_TIMES: u8 = 2;
 const RETRY_STATUS_AFTER_SECONDS: u64 = 5;
 
+#[derive(Debug, Clone, Copy)]
+pub enum ReportReplica<'a> {
+    Poll(&'a ReplicaURL),
+    Script(&'a str),
+}
+
 #[derive(Serialize)]
 struct ReportPayload<'a> {
     replica: &'a str,
@@ -42,14 +48,23 @@ lazy_static! {
     );
 }
 
+impl<'a> ReportReplica<'a> {
+    pub fn as_str(&self) -> &str {
+        match self {
+            Self::Poll(replica) => replica.get_raw(),
+            Self::Script(replica) => replica,
+        }
+    }
+}
+
 pub fn generate_url(path: &str) -> String {
     format!("{}/{}", &APP_CONF.report.endpoint, path)
 }
 
-pub fn status(
+pub fn status<'a>(
     service: &ConfigProbeService,
     node: &ConfigProbeServiceNode,
-    replica: &ReplicaURL,
+    replica: ReportReplica<'a>,
     status: &Status,
     interval: u64,
 ) -> Result<(), ()> {
@@ -57,10 +72,10 @@ pub fn status(
     status_attempt(service, node, replica, status, interval, 0)
 }
 
-fn status_attempt(
+fn status_attempt<'a>(
     service: &ConfigProbeService,
     node: &ConfigProbeServiceNode,
-    replica: &ReplicaURL,
+    replica: ReportReplica<'a>,
     status: &Status,
     interval: u64,
     attempt: u8,
@@ -92,10 +107,10 @@ fn status_attempt(
     }
 }
 
-fn status_request(
+fn status_request<'a>(
     service: &ConfigProbeService,
     node: &ConfigProbeServiceNode,
-    replica: &ReplicaURL,
+    replica: ReportReplica<'a>,
     status: &Status,
     interval: u64,
 ) -> Result<(), ()> {
@@ -106,7 +121,7 @@ fn status_request(
 
     // Generate report payload
     let payload = ReportPayload {
-        replica: replica.get_raw(),
+        replica: replica.as_str(),
         interval: interval,
         health: status.as_str(),
     };
