@@ -9,6 +9,8 @@ Vigil Local is an (optional) slave daemon that you can use to report internal se
 
 Install Vigil Local on a server of yours and configure it with your Vigil endpoint URL and token; it will then start monitoring all configured nodes and report them to Vigil. Make sure that you pre-configure all local nodes as `local` in Vigil, and then as `poll` or `script` in Vigil Local, accordingly. The service identifier and node identifier must match on either sides, as they will be used to identify the replica status being reported from the Vigil Local slave to the Vigil master.
 
+Multiple slave daemons can run on separate servers or networks, and report a group of services and nodes to the same Vigil master. Make sure that multiple slaves are not double-reporting replicas on the same monitored service/node pair.
+
 _Tested at Rust version: `rustc 1.44.1 (c7087fe00 2020-06-17)`_
 
 **🇧🇬 Crafted in Sofia, Bulgaria.**
