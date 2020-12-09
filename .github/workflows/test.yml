@@ -14,10 +14,8 @@ jobs:
       - name: Install Rust Toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly
-          override: true
-      - name: Install cargo-fmt
-        run: rustup component add rustfmt --toolchain nightly
+          toolchain: stable
+          components: rustfmt
       - name: Verify Versions
         run: rustc --version && rustup --version && cargo --version
       - name: Cache Cargo Dependencies
@@ -29,10 +27,10 @@ jobs:
             ~/.cargo/git
             target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-      - name: Cargo Build Release
+      - name: Cargo Build
         if: steps.cache-cargo.outputs.cache-hit != 'true'
-        run: cargo build --verbose --release
+        run: cargo build --verbose
       - name: Cargo Test
-        run: cargo clean && cargo test --verbose
+        run: cargo test --verbose
       - name: rustfmt
         run: cargo fmt -- --check
