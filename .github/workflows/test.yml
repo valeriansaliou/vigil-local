@@ -12,19 +12,19 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Rust Toolchain
+      - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
           components: rustfmt
 
-      - name: Verify Versions
+      - name: Verify versions
         run: rustc --version && rustup --version && cargo --version
 
-      - name: Cache Build Artifacts
+      - name: Cache build artifacts
         id: cache-cargo
         uses: actions/cache@v2
         with:
@@ -34,11 +34,11 @@ jobs:
             target
           key: ${{ runner.os }}-cargo
 
-      - name: Build Code
+      - name: Build code
         run: cargo build
 
-      - name: Test Code
+      - name: Test code
         run: cargo test
 
-      - name: Check Code Style
+      - name: Check code style
         run: cargo fmt -- --check
