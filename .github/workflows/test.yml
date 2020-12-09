@@ -26,9 +26,8 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-cargo
       - name: Cargo Build
-        if: steps.cache-cargo.outputs.cache-hit != 'true'
         run: cargo build --verbose
       - name: Cargo Test
         run: cargo test --verbose
