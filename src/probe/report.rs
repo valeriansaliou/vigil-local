@@ -93,7 +93,7 @@ fn status_attempt<'a>(
             if next_attempt >= RETRY_STATUS_TIMES {
                 Err(())
             } else {
-                warn!(
+                error!(
                     "status report attempt #{} failed on #{}:#{}:[{:?}], will retry",
                     attempt, service.id, node.id, replica
                 );

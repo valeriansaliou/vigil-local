@@ -42,7 +42,11 @@ pub fn dispatch(service: &ConfigProbeService, node: &ConfigProbeServiceNode, int
             for replica in replicas {
                 let replica_status = proceed_replica(&service.id, &node.id, replica);
 
-                debug!("got replica status upon poll: {:?}", replica_status);
+                if replica_status == Status::Dead {
+                    warn!("got replica status upon poll: {:?}", replica_status);
+                } else {
+                    debug!("got replica status upon poll: {:?}", replica_status);
+                }
 
                 match report_status(
                     &service,
@@ -52,7 +56,7 @@ pub fn dispatch(service: &ConfigProbeService, node: &ConfigProbeServiceNode, int
                     interval,
                 ) {
                     Ok(_) => info!("reported poll replica status: {:?}", replica_status),
-                    Err(_) => warn!("failed reporting poll replica status: {:?}", replica_status),
+                    Err(_) => error!("failed reporting poll replica status: {:?}", replica_status),
                 }
             }
 

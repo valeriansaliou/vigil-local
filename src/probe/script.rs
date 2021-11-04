@@ -29,7 +29,7 @@ pub fn dispatch(service: &ConfigProbeService, node: &ConfigProbeServiceNode, int
                     interval,
                 ) {
                     Ok(_) => info!("reported script replica status: {:?}", replica_status),
-                    Err(_) => warn!(
+                    Err(_) => error!(
                         "failed reporting script replica status: {:?}",
                         replica_status
                     ),
@@ -54,17 +54,26 @@ pub fn proceed_replica(service_id: &str, node_id: &str, replica_id: &str, script
 
     match run_script::run(script, &Vec::new(), &ScriptOptions::new()) {
         Ok((code, _, _)) => {
-            debug!(
-                "script replica execution succeeded with return code: {}",
-                code
-            );
-
             // Return code '0' goes for 'healthy', '1' goes for 'sick'; any other code is 'dead'
-            match code {
+            let replica_status = match code {
                 0 => Status::Healthy,
                 1 => Status::Sick,
                 _ => Status::Dead,
+            };
+
+            if replica_status == Status::Dead {
+                warn!(
+                    "script replica execution succeeded with {:?} return code: {}",
+                    replica_status, code
+                );
+            } else {
+                debug!(
+                    "script replica execution succeeded with {:?} return code: {}",
+                    replica_status, code
+                );
             }
+
+            replica_status
         }
         Err(err) => {
             error!("script replica execution failed with error: {}", err);
