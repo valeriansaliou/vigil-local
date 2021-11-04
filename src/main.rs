@@ -7,19 +7,9 @@
 #[macro_use]
 extern crate log;
 #[macro_use]
-extern crate clap;
-#[macro_use]
 extern crate lazy_static;
 #[macro_use]
 extern crate serde_derive;
-extern crate base64;
-extern crate http_req;
-extern crate ping;
-extern crate run_script;
-extern crate serde;
-extern crate serde_json;
-extern crate toml;
-extern crate url;
 
 mod config;
 mod probe;
@@ -49,10 +39,10 @@ lazy_static! {
 }
 
 fn make_app_args() -> AppArgs {
-    let matches = App::new(crate_name!())
-        .version(crate_version!())
-        .author(crate_authors!())
-        .about(crate_description!())
+    let matches = App::new(clap::crate_name!())
+        .version(clap::crate_version!())
+        .author(clap::crate_authors!())
+        .about(clap::crate_description!())
         .arg(
             Arg::with_name("config")
                 .short("c")

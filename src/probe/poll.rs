@@ -11,8 +11,8 @@ use http_req::{
 use ping::ping;
 
 use std::cmp::min;
+use std::convert::TryFrom;
 use std::net::{SocketAddr, TcpStream, ToSocketAddrs};
-use std::str::FromStr;
 use std::thread;
 use std::time::Duration;
 use std::time::SystemTime;
@@ -274,7 +274,7 @@ fn proceed_replica_request_http(url: &str) -> (bool, Option<Duration>) {
     // Acquire replica response
     let mut response_body = Vec::new();
 
-    let response = Request::new(&Uri::from_str(&url).expect("invalid replica request uri"))
+    let response = Request::new(&Uri::try_from(url).expect("invalid replica request uri"))
         .connect_timeout(Some(dead_timeout))
         .read_timeout(Some(dead_timeout))
         .write_timeout(Some(dead_timeout))

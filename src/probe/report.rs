@@ -11,8 +11,8 @@ use http_req::{
 };
 use serde_json;
 
+use std::convert::TryFrom;
 use std::io;
-use std::str::FromStr;
 use std::thread;
 use std::time::Duration;
 
@@ -23,8 +23,8 @@ use crate::APP_CONF;
 
 pub const REPORT_HTTP_CLIENT_TIMEOUT: Duration = Duration::from_secs(10);
 
-const RETRY_STATUS_TIMES: u8 = 2;
-const RETRY_STATUS_AFTER_SECONDS: u64 = 3;
+const RETRY_STATUS_TIMES: u8 = 4;
+const RETRY_STATUS_AFTER_SECONDS: u64 = 2;
 
 #[derive(Debug, Clone, Copy)]
 pub enum ReportReplica<'a> {
@@ -90,7 +90,7 @@ fn status_attempt<'a>(
         Err(_) => {
             let next_attempt = attempt + 1;
 
-            if next_attempt > RETRY_STATUS_TIMES {
+            if next_attempt >= RETRY_STATUS_TIMES {
                 Err(())
             } else {
                 warn!(
@@ -131,7 +131,7 @@ fn status_request<'a>(
     let payload_json = serde_json::to_vec(&payload).expect("invalid status request payload");
 
     // Generate request URI
-    let request_uri = Uri::from_str(&report_url).expect("invalid status request uri");
+    let request_uri = Uri::try_from(report_url.as_str()).expect("invalid status request uri");
 
     // Acquire report response
     let mut response_sink = io::sink();
