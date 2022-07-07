@@ -50,9 +50,7 @@ jobs:
           tag_name: ${{ steps.current_tag.outputs.tag }}
           name: Vigil Local ${{ steps.current_tag.outputs.tag }}
           body: "⚠️ Changelog not yet provided."
-          files: |
-            ./${{ steps.current_tag.outputs.tag }}-x86_64.tar.gz
-            ./${{ steps.current_tag.outputs.tag }}-armv7.tar.gz
+          files: ./${{ steps.current_tag.outputs.tag }}-*.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
