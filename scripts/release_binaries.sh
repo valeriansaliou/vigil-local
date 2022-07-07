@@ -15,7 +15,8 @@ while [ "$1" != "" ]; do
 
     case $argument_key in
         -v | --version)
-            VIGIL_LOCAL_VERSION="$argument_value"
+            # Notice: strip any leading 'v' to the version number
+            VIGIL_LOCAL_VERSION="${argument_value/v}"
             ;;
         *)
             echo "Unknown argument received: '$argument_key'"
