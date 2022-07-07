@@ -7,10 +7,7 @@ name: Build and Release
 
 jobs:
   build-releases:
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        rust-toolchain: [stable]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -19,7 +16,7 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: ${{ matrix.rust-toolchain }}
+          toolchain: stable
           components: rustfmt
           override: true
 
