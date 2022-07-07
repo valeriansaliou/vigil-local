@@ -13,6 +13,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Cache build artifacts
+        id: cache-cargo
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: build-${{ runner.os }}-cargo-any
+
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
@@ -25,16 +35,6 @@ jobs:
 
       - name: Verify versions
         run: rustc --version && rustup --version && cargo --version && cross --version
-
-      - name: Cache build artifacts
-        id: cache-cargo
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            target
-          key: build-${{ runner.os }}-cargo-any
 
       - name: Get current tag
         id: current_tag
@@ -55,3 +55,19 @@ jobs:
             ./${{ steps.current_tag.outputs.tag }}-armv7.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get current tag
+        id: current_tag
+        uses: WyriHaximus/github-action-get-previous-tag@v1
+        with:
+          fallback: v0.0.0
+
+      - name: Build Docker image
+        run: docker build .
