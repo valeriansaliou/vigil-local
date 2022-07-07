@@ -1,7 +1,7 @@
 Vigil Local
 ===========
 
-[![Test and Build](https://github.com/valeriansaliou/vigil-local/workflows/Test%20and%20Build/badge.svg?branch=master)](https://github.com/valeriansaliou/vigil-local/actions?query=workflow%3A%22Test+and+Build%22) [![dependency status](https://deps.rs/repo/github/valeriansaliou/vigil-local/status.svg)](https://deps.rs/repo/github/valeriansaliou/vigil-local) [![Buy Me A Coffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/valeriansaliou)
+[![Test and Build](https://github.com/valeriansaliou/vigil-local/workflows/Test%20and%20Build/badge.svg?branch=master)](https://github.com/valeriansaliou/vigil-local/actions?query=workflow%3A%22Test+and+Build%22) [![Build and Release](https://github.com/valeriansaliou/vigil-local/workflows/Build%20and%20Release/badge.svg)](https://github.com/valeriansaliou/vigil-local/actions?query=workflow%3A%22Build+and+Release%22) [![dependency status](https://deps.rs/repo/github/valeriansaliou/vigil-local/status.svg)](https://deps.rs/repo/github/valeriansaliou/vigil-local) [![Buy Me A Coffee](https://img.shields.io/badge/buy%20me%20a%20coffee-donate-yellow.svg)](https://www.buymeacoffee.com/valeriansaliou)
 
 **Vigil Local daemon. Used as a slave service to monitor hosts behind a firewall and report their status to Vigil.**
 
@@ -64,13 +64,13 @@ You might find it convenient to run Vigil Local via Docker. You can find the pre
 First, pull the `valeriansaliou/vigil-local` image:
 
 ```bash
-docker pull valeriansaliou/vigil-local:v1.1.0
+docker pull valeriansaliou/vigil-local:v1.1.1
 ```
 
 Then, seed it a configuration file and run it (replace `/path/to/your/vigil-local/config.cfg` with the path to your configuration file):
 
 ```bash
-docker run -v /path/to/your/vigil-local/config.cfg:/etc/vigil-local.cfg valeriansaliou/vigil-local:v1.1.0
+docker run -v /path/to/your/vigil-local/config.cfg:/etc/vigil-local.cfg valeriansaliou/vigil-local:v1.1.1
 ```
 
 ### Configuration
