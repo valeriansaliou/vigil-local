@@ -40,8 +40,6 @@ jobs:
       - name: Get current tag
         id: current_tag
         uses: WyriHaximus/github-action-get-previous-tag@v1
-        with:
-          fallback: v0.0.0
 
       - name: Release binaries
         run: ./scripts/release_binaries.sh --version=${{ steps.current_tag.outputs.tag }}
@@ -49,6 +47,7 @@ jobs:
       - name: Release new version
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ steps.current_tag.outputs.tag }}
           name: Vigil Local ${{ steps.current_tag.outputs.tag }}
           body: "⚠️ Changelog not yet provided."
           files: |
