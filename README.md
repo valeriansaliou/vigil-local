@@ -35,6 +35,8 @@ You will still need to provide the binary with the configuration file, so make s
 
 _The binary provided is statically-linked, which means that it will be able to run on any Linux-based server. Still, it will not work on MacOS or Windows machines._
 
+👉 _Each release binary comes with an `.asc` signature file, which can be verified using [@valeriansaliou](https://github.com/valeriansaliou) GPG public key: [:key:valeriansaliou.gpg.pub.asc](https://valeriansaliou.name/files/keys/valeriansaliou.gpg.pub.asc)._
+
 **Install from Cargo:**
 
 If you prefer managing `vigil-local` via Rust's Cargo, install it directly via `cargo install`:
