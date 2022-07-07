@@ -31,7 +31,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~/.cargo
+            ~/.cargo/registry
+            ~/.cargo/git
             target
           key: build-${{ runner.os }}-cargo-any
 
