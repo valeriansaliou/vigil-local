@@ -43,7 +43,7 @@ function release_for_architecture {
         mkdir ./vigil-local && \
         cp -p "target/$2/release/vigil-local" ./vigil-local/ && \
         cp ./config.cfg vigil-local/ && \
-        tar -czvf "$final_tar" ./vigil-local && \
+        tar -czvf --owner=0 --group=0 "$final_tar" ./vigil-local && \
         rm -r ./vigil-local/
     release_result=$?
 
