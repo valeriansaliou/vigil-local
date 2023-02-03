@@ -18,7 +18,7 @@ doc = false
 
 [dependencies]
 log = "0.4"
-clap = { version = "3.2", features = ["std", "cargo"] }
+clap = { version = "4.1", features = ["std", "cargo"] }
 lazy_static = "1.4"
 serde = { version = "1.0", default-features = false }
 serde_derive = "1.0"
