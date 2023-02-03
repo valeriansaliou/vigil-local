@@ -27,7 +27,7 @@ toml = "0.7"
 url = { version = "2.1", default-features = false }
 ping = "0.4"
 run_script = "0.10"
-http_req = { version = "0.8", features = ["rust-tls"], default-features = false }
+http_req = { version = "0.9", features = ["rust-tls"], default-features = false }
 base64 = "0.21"
 
 [profile.dev]
