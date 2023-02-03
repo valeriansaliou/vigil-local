@@ -28,7 +28,7 @@ url = { version = "2.1", default-features = false }
 ping = "0.4"
 run_script = "0.10"
 http_req = { version = "0.8", features = ["rust-tls"], default-features = false }
-base64 = "0.13"
+base64 = "0.21"
 
 [profile.dev]
 opt-level = 0
