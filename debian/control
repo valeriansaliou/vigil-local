@@ -1,0 +1,13 @@
+Source: vigil-local
+Section: net
+Priority: ext
+Maintainer: Valerian Saliou <valerian@valeriansaliou.name>
+Standards-Version: 3.9.4
+Build-Depends: wget, ca-certificates
+Homepage: https://github.com/valeriansaliou/vigil-local
+
+Package: vigil-local
+Architecture: any
+Depends: adduser
+Provides: vigil-local
+Description: Vigil Local daemon. Used as a slave service to monitor hosts behind a firewall and report their status to Vigil.

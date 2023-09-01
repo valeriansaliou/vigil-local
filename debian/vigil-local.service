@@ -1,0 +1,13 @@
+[Unit]
+Description=Vigil Local reporter daemon
+After=network.target
+
+[Service]
+Type=simple
+User=vigil-local
+Group=vigil-local
+ExecStart=/usr/bin/vigil-local -c /etc/vigil-local.cfg
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

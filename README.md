@@ -37,6 +37,44 @@ _The binary provided is statically-linked, which means that it will be able to r
 
 👉 _Each release binary comes with an `.asc` signature file, which can be verified using [@valeriansaliou](https://github.com/valeriansaliou) GPG public key: [:key:valeriansaliou.gpg.pub.asc](https://valeriansaliou.name/files/keys/valeriansaliou.gpg.pub.asc)._
 
+**Install from packages:**
+
+Vigil Local provides [pre-built packages](https://packagecloud.io/valeriansaliou/vigil-local) for Debian-based systems (Debian, Ubuntu, etc.).
+
+**Important: Vigil Local only provides 64 bits packages targeting Debian 10, 11 & 12 for now (codenames: `buster`, `bullseye` & `bookworm`). You will still be able to use them on other Debian versions, as well as Ubuntu.**
+
+First, add the Vigil Local APT repository (eg. for Debian `bookworm`):
+
+```bash
+echo "deb https://packagecloud.io/valeriansaliou/vigil-local/debian/ bookworm main" > /etc/apt/sources.list.d/valeriansaliou_vigil-local.list
+```
+
+```bash
+curl --silent -L https://packagecloud.io/valeriansaliou/vigil-local/gpgkey | apt-key add -
+```
+
+```bash
+apt-get update
+```
+
+Then, install the Vigil Local package:
+
+```bash
+apt-get install vigil-local
+```
+
+Then, edit the pre-filled Vigil Local configuration file:
+
+```bash
+nano /etc/vigil-local.cfg
+```
+
+Finally, restart Vigil Local:
+
+```
+service vigil-local restart
+```
+
 **Install from Cargo:**
 
 If you prefer managing `vigil-local` via Rust's Cargo, install it directly via `cargo install`:
