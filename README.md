@@ -46,11 +46,11 @@ Vigil Local provides [pre-built packages](https://packagecloud.io/valeriansaliou
 First, add the Vigil Local APT repository (eg. for Debian `bookworm`):
 
 ```bash
-echo "deb https://packagecloud.io/valeriansaliou/vigil-local/debian/ bookworm main" > /etc/apt/sources.list.d/valeriansaliou_vigil-local.list
+echo "deb [signed-by=/usr/share/keyrings/valeriansaliou_vigil-local.gpg] https://packagecloud.io/valeriansaliou/vigil-local/debian/ bookworm main" > /etc/apt/sources.list.d/valeriansaliou_vigil-local.list
 ```
 
 ```bash
-curl --silent -L https://packagecloud.io/valeriansaliou/vigil-local/gpgkey | apt-key add -
+curl -fsSL https://packagecloud.io/valeriansaliou/vigil-local/gpgkey | gpg --dearmor -o /usr/share/keyrings/valeriansaliou_vigil-local.gpg
 ```
 
 ```bash
