@@ -115,6 +115,8 @@ docker run -v /path/to/your/vigil-local/config.cfg:/etc/vigil-local.cfg valerian
 
 Use the sample [config.cfg](https://github.com/valeriansaliou/vigil-local/blob/master/config.cfg) configuration file and adjust it to your own environment.
 
+You can also use environment variables with string interpolation in your configuration file, eg. `token = ${VIGIL_TOKEN}`.
+
 **Available configuration options are commented below, with allowed values:**
 
 **[server]**
