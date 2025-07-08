@@ -23,8 +23,8 @@ use super::status::Status;
 use crate::config::config::{ConfigProbeService, ConfigProbeServiceNode};
 use crate::APP_CONF;
 
-const NODE_ICMP_TIMEOUT_MILLISECONDS: u64 = 1000;
 const RETRY_REPLICA_AFTER_MILLISECONDS: u64 = 200;
+const NODE_ICMP_TIMEOUT_SECONDS: u64 = 1;
 
 const HTTP_STATUS_HEALTHY_ABOVE: u16 = 200;
 const HTTP_STATUS_HEALTHY_BELOW: u16 = 400;
@@ -172,9 +172,9 @@ fn proceed_replica_request_icmp(host: &str) -> (bool, Option<Duration>) {
                 //   timeout value is used by default, though the configured dead delay value \
                 //   is preferred in the event it is lower than the hard-coded value (unlikely \
                 //   though possible in some setups).
-                let pinger_timeout = Duration::from_millis(min(
-                    NODE_ICMP_TIMEOUT_MILLISECONDS,
-                    acquire_dead_timeout().as_secs() * 1000,
+                let pinger_timeout = Duration::from_secs(min(
+                    NODE_ICMP_TIMEOUT_SECONDS,
+                    acquire_dead_timeout().as_secs(),
                 ));
 
                 // Probe all returned addresses (sequentially)
