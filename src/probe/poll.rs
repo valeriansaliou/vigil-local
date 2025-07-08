@@ -172,7 +172,7 @@ fn proceed_replica_request_icmp(host: &str) -> (bool, Option<Duration>) {
                 //   timeout value is used by default, though the configured dead delay value \
                 //   is preferred in the event it is lower than the hard-coded value (unlikely \
                 //   though possible in some setups).
-                let pinger_timeout = Duration::from_secs(min(
+                let pinger_timeout = Duration::from_millis(min(
                     NODE_ICMP_TIMEOUT_MILLISECONDS,
                     acquire_dead_timeout().as_secs() * 1000,
                 ));
