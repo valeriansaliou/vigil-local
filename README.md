@@ -41,7 +41,7 @@ _The binary provided is statically-linked, which means that it will be able to r
 
 Vigil Local provides [pre-built packages](https://packagecloud.io/valeriansaliou/vigil-local) for Debian-based systems (Debian, Ubuntu, etc.).
 
-**Important: Vigil Local only provides 64 bits packages targeting Debian 10, 11 & 12 for now (codenames: `buster`, `bullseye` & `bookworm`). You will still be able to use them on other Debian versions, as well as Ubuntu.**
+**Important: Vigil Local only provides 64 bits packages targeting Debian 11 & 12 for now (codenames: `bullseye` & `bookworm`). You will still be able to use them on other Debian versions, as well as Ubuntu.**
 
 First, add the Vigil Local APT repository (eg. for Debian `bookworm`):
 
