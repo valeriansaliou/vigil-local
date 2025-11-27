@@ -23,7 +23,6 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
-            target
           key: test-${{ runner.os }}-cargo-${{ matrix.rust-toolchain }}
 
       - name: Install Rust toolchain
@@ -40,4 +39,7 @@ jobs:
         run: rustc --version && rustup --version && cargo --version
 
       - name: Build ARM64 binary
-        run: cross build --target "aarch64-unknown-linux-musl"
+        run: cross build --target "aarch64-unknown-linux-musl" --release
+
+      - name: Build AMD64 binary
+        run: cross build --target "x86_64-unknown-linux-musl" --release
