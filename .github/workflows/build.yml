@@ -21,7 +21,6 @@ jobs:
             ~/.cargo/bin
             ~/.cargo/registry
             ~/.cargo/git
-            target
           key: build-${{ runner.os }}-cargo-any
 
       - name: Install Rust toolchain
