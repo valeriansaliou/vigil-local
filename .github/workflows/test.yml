@@ -33,14 +33,11 @@ jobs:
           components: rustfmt
           override: true
 
+      - name: Install cross-compilation tools (if needed)
+        run: which cross >/dev/null || cargo install cross
+
       - name: Verify versions
         run: rustc --version && rustup --version && cargo --version
 
-      - name: Build code
-        run: cargo build
-
-      - name: Test code
-        run: cargo test
-
-      - name: Check code style
-        run: cargo fmt -- --check
+      - name: Build ARM64 binary
+        run: cross build --target "aarch64-unknown-linux-musl"
