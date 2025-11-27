@@ -11,7 +11,7 @@ Install Vigil Local on a server of yours and configure it with your Vigil endpoi
 
 Multiple slave daemons can run on separate servers or networks, and report a group of services and nodes to the same Vigil master. Make sure that multiple slaves are not double-reporting replicas on the same monitored service/node pair.
 
-_Tested at Rust version: `rustc 1.62.0 (a8314ef7d 2022-06-27)`_
+_Tested at Rust version: `rustc 1.91.1 (ed61e7d7e 2025-11-07)`_
 
 **🇧🇬 Crafted in Sofia, Bulgaria.**
 

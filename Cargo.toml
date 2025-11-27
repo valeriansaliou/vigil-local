@@ -23,13 +23,13 @@ lazy_static = "1.4"
 serde = { version = "1.0", default-features = false }
 serde_derive = "1.0"
 serde_json = "1.0"
-toml = "0.7"
+toml = "0.9"
 envsubst = "0.2"
 url = { version = "2.1", default-features = false }
-ping = "0.4"
-run_script = "0.10"
-http_req = { version = "0.9", features = ["rust-tls"], default-features = false }
-base64 = "0.21"
+ping = "0.7"
+run_script = "0.11"
+http_req = { version = "0.14", features = ["rust-tls"], default-features = false }
+base64 = "0.22"
 
 [profile.dev]
 opt-level = 0
