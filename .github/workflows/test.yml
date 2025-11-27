@@ -23,6 +23,7 @@ jobs:
           path: |
             ~/.cargo/registry
             ~/.cargo/git
+            target
           key: test-${{ runner.os }}-cargo-${{ matrix.rust-toolchain }}
 
       - name: Install Rust toolchain
@@ -32,11 +33,14 @@ jobs:
           components: rustfmt
           override: true
 
-      - name: Install cross-compilation tools (if needed)
-        run: which cross >/dev/null || cargo install cross
-
       - name: Verify versions
         run: rustc --version && rustup --version && cargo --version
 
-      - name: Release binaries
-        run: ./scripts/release_binaries.sh --version=1.2.2
+      - name: Build code
+        run: cargo build
+
+      - name: Test code
+        run: cargo test
+
+      - name: Check code style
+        run: cargo fmt -- --check
