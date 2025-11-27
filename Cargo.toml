@@ -1,6 +1,6 @@
 [package]
 name = "vigil-local"
-version = "1.2.1"
+version = "1.2.2"
 description = "Vigil Local daemon. Used as a slave service to monitor hosts behind a firewall and report their status to Vigil."
 readme = "README.md"
 license = "MPL-2.0"

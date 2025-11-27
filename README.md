@@ -102,13 +102,13 @@ You might find it convenient to run Vigil Local via Docker. You can find the pre
 First, pull the `valeriansaliou/vigil-local` image:
 
 ```bash
-docker pull valeriansaliou/vigil-local:v1.2.1
+docker pull valeriansaliou/vigil-local:v1.2.2
 ```
 
 Then, seed it a configuration file and run it (replace `/path/to/your/vigil-local/config.cfg` with the path to your configuration file):
 
 ```bash
-docker run -v /path/to/your/vigil-local/config.cfg:/etc/vigil-local.cfg valeriansaliou/vigil-local:v1.2.1
+docker run -v /path/to/your/vigil-local/config.cfg:/etc/vigil-local.cfg valeriansaliou/vigil-local:v1.2.2
 ```
 
 ### Configuration
