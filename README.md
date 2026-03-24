@@ -35,8 +35,6 @@ You will still need to provide the binary with the configuration file, so make s
 
 _The binary provided is statically-linked, which means that it will be able to run on any Linux-based server. Still, it will not work on MacOS or Windows machines._
 
-👉 _Each release binary comes with an `.asc` signature file, which can be verified using [@valeriansaliou](https://github.com/valeriansaliou) GPG public key: [:key:valeriansaliou.gpg.pub.asc](https://valeriansaliou.name/files/keys/valeriansaliou.gpg.pub.asc)._
-
 **Install from packages:**
 
 Vigil Local provides [pre-built packages](https://packagecloud.io/valeriansaliou/vigil-local) for Debian-based systems (Debian, Ubuntu, etc.).
