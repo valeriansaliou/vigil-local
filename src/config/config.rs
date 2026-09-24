@@ -60,4 +60,5 @@ pub struct ConfigProbeServiceNode {
     pub mode: Mode,
     pub replicas: Option<Vec<ReplicaURL>>,
     pub scripts: Option<Vec<String>>,
+    pub report_prefix: Option<String>,
 }

@@ -51,7 +51,7 @@ pub fn dispatch(service: &ConfigProbeService, node: &ConfigProbeServiceNode, int
                 match report_status(
                     &service,
                     node,
-                    ReportReplica::Poll(replica),
+                    ReportReplica::Poll(replica, node.report_prefix.as_deref()),
                     &replica_status,
                     interval,
                 ) {

@@ -29,8 +29,8 @@ const RETRY_STATUS_AFTER_SECONDS: u64 = 2;
 
 #[derive(Debug, Clone, Copy)]
 pub enum ReportReplica<'a> {
-    Poll(&'a ReplicaURL),
-    Script(&'a str),
+    Poll(&'a ReplicaURL, Option<&'a str>),
+    Script(&'a str, Option<&'a str>),
 }
 
 #[derive(Serialize)]
@@ -50,10 +50,15 @@ lazy_static! {
 }
 
 impl<'a> ReportReplica<'a> {
-    pub fn as_str(&self) -> &str {
-        match self {
-            Self::Poll(replica) => replica.get_raw(),
-            Self::Script(replica) => replica,
+    pub fn to_string(&self) -> String {
+        let values = match self {
+            Self::Poll(replica, prefix) => (replica.get_raw(), prefix),
+            Self::Script(replica, prefix) => (*replica, prefix),
+        };
+
+        match values {
+            (replica, Some(prefix)) => format!("{}:{}", prefix, replica),
+            (replica, None) => replica.to_string(),
         }
     }
 }
@@ -115,14 +120,20 @@ fn status_request<'a>(
     status: &Status,
     interval: u64,
 ) -> Result<(), ()> {
-    // Generate report URL
-    let report_url = generate_url(&format!("reporter/{}/{}/", &service.id, &node.id));
+    // Generate report URL and replica ID
+    let (report_url, replica_id) = (
+        generate_url(&format!("reporter/{}/{}/", &service.id, &node.id)),
+        replica.to_string(),
+    );
 
-    debug!("generated report url: {}", &report_url);
+    debug!(
+        "generated report url: {} for replica: {}",
+        &report_url, &replica_id
+    );
 
     // Generate report payload
     let payload = ReportPayload {
-        replica: replica.as_str(),
+        replica: &replica_id,
         interval: interval,
         health: status.as_str(),
     };

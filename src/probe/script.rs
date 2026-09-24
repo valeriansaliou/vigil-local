@@ -24,7 +24,7 @@ pub fn dispatch(service: &ConfigProbeService, node: &ConfigProbeServiceNode, int
                 match report_status(
                     &service,
                     node,
-                    ReportReplica::Script(&replica_id),
+                    ReportReplica::Script(&replica_id, node.report_prefix.as_deref()),
                     &replica_status,
                     interval,
                 ) {

@@ -145,6 +145,7 @@ You can also use environment variables with string interpolation in your configu
 * `mode` (type: _string_, allowed: `poll`, `script`, no default) — Probe mode for this node (ie. `poll` is direct HTTP, TCP or ICMP poll to the URLs set in `replicas`, while `script` is used to execute a shell script)
 * `replicas` (type: _array[string]_, allowed: TCP, ICMP or HTTP URLs, default: empty) — Node replica URLs to be probed (only used if `mode` is `poll`)
 * `scripts` (type: _array[string]_, allowed: shell scripts as source code, default: empty) — Shell scripts to be executed on the system as a Vigil Local sub-process; they are handy to build custom probes (only used if `mode` is `script`)
+* `report_prefix` (type: _string_, allowed: any string, default: no default) — Prefix to prepend to the `replica` identifier reported to Vigil
 
 ### Run
 
