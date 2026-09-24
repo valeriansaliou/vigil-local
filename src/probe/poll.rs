@@ -190,7 +190,7 @@ fn proceed_replica_request_icmp(host: &str) -> (bool, Option<Duration>) {
                     let ping_start_time = SystemTime::now();
 
                     // Ping target IP address
-                    match ping(address_ip, Some(pinger_timeout), None, None, None, None) {
+                    match ping(address_ip, pinger_timeout) {
                         Ok(_) => {
                             debug!(
                                 "got prober poll response for icmp target: {} from host: {}",
