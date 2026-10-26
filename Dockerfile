@@ -32,7 +32,7 @@ RUN if [ ! -z "$PREBUILT_TAG" ]; then \
         tar -xzf $PREBUILT_TAG-$(cat .arch).tar.gz \
     ; fi
 
-FROM scratch
+FROM alpine:latest
 
 WORKDIR /usr/src/vigil-local
 
