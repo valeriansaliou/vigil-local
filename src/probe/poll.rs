@@ -23,7 +23,6 @@ use super::status::Status;
 use crate::config::config::{ConfigProbeService, ConfigProbeServiceNode};
 use crate::APP_CONF;
 
-const RETRY_REPLICA_AFTER_MILLISECONDS: u64 = 200;
 const NODE_ICMP_TIMEOUT_SECONDS: u64 = 1;
 
 const HTTP_STATUS_HEALTHY_ABOVE: u16 = 200;
@@ -102,7 +101,7 @@ fn proceed_replica_attempt(
                 );
 
                 // Retry after delay
-                thread::sleep(Duration::from_millis(RETRY_REPLICA_AFTER_MILLISECONDS));
+                thread::sleep(Duration::from_millis(APP_CONF.metrics.poll_retry_wait));
 
                 proceed_replica_attempt(service_id, node_id, replica, retry_times, next_attempt)
             }

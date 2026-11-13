@@ -24,6 +24,10 @@ pub fn metrics_poll_retry() -> u8 {
     2
 }
 
+pub fn metrics_poll_retry_wait() -> u64 {
+    200
+}
+
 pub fn metrics_poll_delay_dead() -> u64 {
     10
 }

@@ -42,6 +42,9 @@ pub struct ConfigMetrics {
     #[serde(default = "defaults::metrics_poll_retry")]
     pub poll_retry: u8,
 
+    #[serde(default = "defaults::metrics_poll_retry_wait")]
+    pub poll_retry_wait: u64,
+
     #[serde(default = "defaults::metrics_poll_delay_dead")]
     pub poll_delay_dead: u64,
 

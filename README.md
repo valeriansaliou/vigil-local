@@ -132,6 +132,7 @@ You can also use environment variables with string interpolation in your configu
 
 * `interval` (type: _integer_, allowed: seconds, default: `120`) — Interval for which to probe nodes in `poll` and `script` mode (ie. all nodes)
 * `poll_retry` (type: _integer_, allowed: seconds, default: `2`) — Interval after which to try probe for a second time nodes in `poll` mode (only when the first check fails)
+* `poll_retry_wait` (type: _integer_, allowed: milliseconds, default: `200`) — Time to hold for before retrying a last failed poll probe (for each `poll_retry` attempted)
 * `poll_delay_dead` (type: _integer_, allowed: seconds, default: `10`) — Delay after which a node in `poll` mode is to be considered `dead` (ie. check response delay)
 * `poll_delay_sick` (type: _integer_, allowed: seconds, default: `1`) — Delay after which a node in `poll` mode is to be considered `sick` (ie. check response delay)
 
