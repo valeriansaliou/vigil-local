@@ -26,6 +26,12 @@ pub struct ConfigServer {
 pub struct ConfigReport {
     pub endpoint: String,
     pub token: String,
+
+    #[serde(default = "defaults::report_error_retry_times")]
+    pub error_retry_times: u8,
+
+    #[serde(default = "defaults::report_error_retry_after")]
+    pub error_retry_after: u64,
 }
 
 #[derive(Deserialize)]

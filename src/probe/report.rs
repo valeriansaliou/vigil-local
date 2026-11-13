@@ -24,9 +24,6 @@ use crate::APP_CONF;
 
 pub const REPORT_HTTP_CLIENT_TIMEOUT: Duration = Duration::from_secs(10);
 
-const RETRY_STATUS_TIMES: u8 = 4;
-const RETRY_STATUS_AFTER_SECONDS: u64 = 2;
-
 #[derive(Debug, Clone, Copy)]
 pub enum ReportReplica<'a> {
     Poll(&'a ReplicaURL, Option<&'a str>),
@@ -96,7 +93,7 @@ fn status_attempt<'a>(
         Err(_) => {
             let next_attempt = attempt + 1;
 
-            if next_attempt >= RETRY_STATUS_TIMES {
+            if next_attempt >= APP_CONF.report.error_retry_times {
                 Err(())
             } else {
                 error!(
@@ -105,7 +102,7 @@ fn status_attempt<'a>(
                 );
 
                 // Retry after delay
-                thread::sleep(Duration::from_secs(RETRY_STATUS_AFTER_SECONDS));
+                thread::sleep(Duration::from_secs(APP_CONF.report.error_retry_after));
 
                 status_attempt(service, node, replica, status, interval, next_attempt)
             }

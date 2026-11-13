@@ -125,6 +125,8 @@ You can also use environment variables with string interpolation in your configu
 
 * `endpoint` (type: _string_, allowed: URL, no default) — Vigil status page master reporting URL (can be public via eg. HTTPS, or private over LAN; without trailing slash, eg. `https://status.example.com`)
 * `token` (type: _string_, allowed: any string, no default) — Your master Vigil Reporter token (as configured in Vigil)
+* `error_retry_times` (type: _integer_, allowed: any number, default: `4`) — Number of times to retry a failed report to the master Vigil
+* `error_retry_after` (type: _integer_, allowed: seconds, default: `2`) — Delay after which to retry a failed report to the master Vigil
 
 **[metrics]**
 

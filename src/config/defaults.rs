@@ -8,6 +8,14 @@ pub fn server_log_level() -> String {
     "error".to_string()
 }
 
+pub fn report_error_retry_times() -> u8 {
+    4
+}
+
+pub fn report_error_retry_after() -> u64 {
+    2
+}
+
 pub fn metrics_interval() -> u64 {
     120
 }
